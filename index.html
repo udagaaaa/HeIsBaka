@@ -1,101 +1,139 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>こいつバカ</title>
+  <title>I'm GAY</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
       width: 100%;
-      font-family: 'Arial Black', sans-serif;
+      height: 100%;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: black;
       overflow: hidden;
     }
 
     /* ロード画面 */
     #splash {
-      background: black;
-      color: white;
       position: fixed;
       top: 0; left: 0;
-      width: 100%; height: 100%;
+      width: 100%;
+      height: 100%;
+      background: black;
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      animation: fadeout 1s ease-in-out 5s forwards;
       z-index: 1000;
+      animation: hideSplash 1s ease-in-out 3s forwards;
     }
 
     #splash h1 {
-      font-size: clamp(2rem, 6vw, 4rem);
+      color: white;
+      font-size: clamp(1rem, 3vw, 1.8rem);
+      font-weight: 300;
+      letter-spacing: 0.15em;
       opacity: 0;
-      animation: fadein 3s ease-in-out 0.5s forwards;
+      animation: fadeInText 1.5s ease-in-out 0.5s forwards;
     }
 
-    @keyframes fadein {
-      from {opacity: 0; transform: scale(0.5);}
-      to {opacity: 1; transform: scale(1);}
+    @keyframes fadeInText {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
     }
 
-    @keyframes fadeout {
+    @keyframes hideSplash {
       to { opacity: 0; visibility: hidden; }
     }
 
-    /* 本文ページ */
-    #main {
-      background: linear-gradient(-45deg, #ff0080, #7928ca, #2afadf, #00ff87);
-      background-size: 400% 400%;
-      animation: gradient 10s ease infinite;
-      height: 100%;
+    /* 暗転 */
+    #dark {
+      position: fixed;
+      top: 0; left: 0;
       width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      height: 100%;
+      background: black;
       opacity: 0;
-      animation: showmain 1s ease-in-out 5s forwards;
+      z-index: 999;
+      transition: opacity 1s;
     }
 
-    h1 {
-      font-size: clamp(2.5rem, 8vw, 5rem);
-      color: #fff;
-      text-shadow:
-        0 0 5px #fff,
-        0 0 10px #fff,
-        0 0 20px #ff00ff,
-        0 0 30px #ff00ff;
+    /* メイン表示 */
+    #main {
+      opacity: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      background: black;
+    }
+
+    #main h1 {
+      color: white;
+      font-size: clamp(2.5rem, 8vw, 6rem);
       text-align: center;
-      padding: 0 1rem;
-      animation: pulse 2s infinite ease-in-out;
-    }
-
-    @keyframes gradient {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
-
-    @keyframes pulse {
-      0%, 100% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff00ff; }
-      50% { text-shadow: 0 0 8px #fff, 0 0 20px #ff00ff, 0 0 30px #ff00ff; }
-    }
-
-    @keyframes showmain {
-      to { opacity: 1; }
+      transform: scale(0.8);
+      opacity: 0;
+      transition: all 1.5s cubic-bezier(.17,.67,.83,.67);
     }
   </style>
 </head>
 <body>
-  <!-- ロード画面 -->
+  <!-- ロード -->
   <div id="splash">
-    <h1>Now loading...</h1>
+    <h1>Now Loading...</h1>
   </div>
+
+  <!-- 暗転 -->
+  <div id="dark"></div>
 
   <!-- 本文 -->
   <div id="main">
-    <h1>こいつバカ</h1>
+    <h1>I'm GAY</h1>
   </div>
+
+  <!-- 音声 -->
+  <audio id="gay-audio" preload="auto">
+    <source src="https://www.myinstants.com/media/sounds/im-gay.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // ステップ1: ロード終了後に暗転
+    setTimeout(() => {
+      document.getElementById('dark').style.opacity = 1;
+    }, 3000);
+
+    // ステップ2: 暗転後にメイン表示＋暗転解除＋音声再生
+    setTimeout(() => {
+      // 暗転を解除して完全に消す
+      const dark = document.getElementById('dark');
+      dark.style.opacity = 0;
+      setTimeout(() => {
+        dark.style.display = 'none';
+      }, 1000); // フェードアウトが終わるまで待つ
+
+      // メインを表示
+      const main = document.getElementById('main');
+      main.style.opacity = 1;
+      // h1アニメーション（拡大＋フェードイン）
+      const h1 = main.querySelector('h1');
+      h1.style.opacity = 1;
+      h1.style.transform = 'scale(1)';
+
+      // 音声（1秒目から1.5秒間だけ再生）
+      const audio = document.getElementById('gay-audio');
+      audio.currentTime = 1;
+      audio.play().then(() => {
+        setTimeout(() => {
+          audio.pause();
+          audio.currentTime = 0;
+        }, 1500);
+      }).catch(e => {
+        // 音声が自動再生できない場合は何もしない
+      });
+    }, 4000); // 3秒(ロード)+1秒(暗転)
+  </script>
 </body>
 </html>
