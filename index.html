@@ -5,24 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>こいつバカ</title>
   <style>
-    body {
+    html, body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(-45deg, #ff0057, #fffd44, #00ffd0, #ff6ec4);
-      background-size: 400% 400%;
-      animation: gradient 15s ease infinite;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      height: 100%;
+      width: 100%;
       font-family: 'Arial Black', sans-serif;
+      background: linear-gradient(-45deg, #ff0080, #7928ca, #2afadf, #00ff87);
+      background-size: 400% 400%;
+      animation: gradient 10s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     h1 {
-      font-size: 5rem;
-      color: white;
-      text-shadow: 0 0 10px black, 0 0 30px white, 0 0 60px red;
-      animation: pulse 1.5s infinite;
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      color: #fff;
+      text-align: center;
+      padding: 0 1rem;
+      text-shadow: 
+        0 0 5px #fff,
+        0 0 10px #fff,
+        0 0 20px #ff00ff,
+        0 0 30px #ff00ff;
+      animation: pulse 2s infinite ease-in-out;
     }
 
     @keyframes gradient {
@@ -32,9 +39,8 @@
     }
 
     @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
+      0%, 100% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff00ff; }
+      50% { text-shadow: 0 0 8px #fff, 0 0 20px #ff00ff, 0 0 30px #ff00ff; }
     }
   </style>
 </head>
